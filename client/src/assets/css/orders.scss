@@ -1,0 +1,189 @@
+$bg-color: #f2f6f9;
+$active-color: #25be64;
+$inactive-color: #dadde4;
+$new-color: red;
+$text-color: #141a4e;
+$table-bg-color: #fefefe;
+$table-head-bg-color: #e1e8f2;
+$table-border-color: #edeef2;
+$hover-bg-color: hsl(250, 69%, 61%);
+$hover-text-color: #ffffff;
+
+@mixin mobile-xxs {
+  @media (max-width: 400px) {
+    @content;
+  }
+}
+
+@mixin min-tablet {
+  @media (min-width: 768px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (max-width: 991px) {
+    @content;
+  }
+}
+
+@mixin tablet-to-desktop {
+  @media (min-width: 768px) and (max-width: 991px) {
+    @content;
+  }
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.table-container {
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+th {
+  color: white;
+}
+
+td {
+  color: hsl(250, 8%, 75%);
+}
+
+.responsive-table {
+  border-collapse: collapse;
+  border-radius: 10px;
+  background-color: rgb(25, 27, 28);
+  box-shadow: rgb(0 0 0 / 2%) 0px 0px 10px;
+  width: 100%;
+  margin: 2rem 0;
+  overflow: hidden;
+  &__row {
+    display: grid;
+    border-bottom: 1px solid rgb(52, 57, 59);
+    padding: 0 1.5rem;
+    @include min-tablet {
+      grid-template-columns: 2fr 1fr 2fr 2fr 1fr;
+    }
+    @include tablet-to-desktop {
+      grid-template-columns: 1fr 2fr 1fr;
+    }
+    th,
+    td {
+      padding: 1rem;
+    }
+  }
+  &__head {
+    background-color: rgb(36, 39, 41);
+    @include desktop {
+      display: none;
+    }
+    &__title {
+      display: flex;
+      align-items: center;
+      font-weight: 500;
+      text-transform: capitalize;
+    }
+  }
+  &__body {
+    .responsive-table__row {
+      transition: 0.1s linear;
+      transition-property: color, background;
+      &:last-child {
+        border-bottom: none;
+      }
+      &:hover {
+        color: rgb(232, 230, 227);
+        background-color: rgb(46, 27, 144);
+      }
+    }
+    &__text {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      &::before {
+        margin-right: 1rem;
+        font-weight: 600;
+        text-transform: capitalize;
+      }
+      @include desktop {
+        &::before {
+          content: attr(data-title) " :";
+        }
+      }
+      @include mobile-xxs {
+        &::before {
+          width: 100%;
+          margin-bottom: 1rem;
+        }
+      }
+      &--order_id {
+        font-weight: 600;
+        @include min-tablet {
+          &::before {
+            display: none;
+          }
+        }
+        @include tablet-to-desktop {
+          grid-column: 1 / 2;
+          flex-direction: column;
+        }
+      }
+      &--order_price,
+      &--payment_status,
+      &--placed_on {
+        @include tablet-to-desktop {
+          grid-column: 2/ 3;
+        }
+      }
+      &--action {
+        @include tablet-to-desktop {
+          grid-column: 3/ -1;
+        }
+      }
+      &--order_id,
+      &--action {
+        @include tablet-to-desktop {
+          grid-row: 2;
+        }
+      }
+    }
+  }
+}
+
+.up-arrow {
+  height: 100%;
+  max-height: 1.8rem;
+  margin-left: 1rem;
+}
+
+.user-icon {
+  width: 100%;
+  max-width: 4rem;
+  height: auto;
+  margin-right: 1rem;
+}
+
+.status-indicator {
+  display: inline-block;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
+  background: #222222;
+  margin-right: 0.5rem;
+  &--active {
+    background: $active-color;
+  }
+  &--inactive {
+    background: $inactive-color;
+  }
+  &--new {
+    background: $new-color;
+  }
+}

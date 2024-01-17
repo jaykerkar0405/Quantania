@@ -1,0 +1,4 @@
+.message::after {
+  content: "\A";
+  white-space: normal;
+}
